@@ -14,7 +14,7 @@
 
 Name:           python-tensile
 Version:        %{rocm_version}
-Release:        2%{?dist}
+Release:        %autorelease
 Summary:        Tool for creating benchmark-driven backend libraries for GEMMs
 
 Url:            https://github.com/ROCmSoftwarePlatform/Tensile
@@ -105,11 +105,4 @@ rm %{buildroot}%{_bindir}/tensile*
 %exclude %{python3_sitelib}/%{upstreamname}/Tests
 
 %changelog
-* Tue Jan 9 2024 Tom Rix <trix@redhat.com> - 6.0.0-2
-- Fix /opt/rocm paths with sed
-
-* Sat Jan 6 2024 Tom Rix <trix@redhat.com> - 6.0.0-1
-- Update to 6.0
-
-* Fri Jun 30 2023 Jeremy Newton <alexjnewt at hotmail dot com> - 5.6.0-1
-- Initial package
+%autochangelog
