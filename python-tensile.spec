@@ -49,6 +49,7 @@ rocBLAS. Tensile acts as the performance backbone for a wide variety of
 
 %package -n python3-tensile
 Summary:        %{summary}
+Requires:       cmake-filesystem
 
 %description -n python3-tensile
 Tensile is a tool for creating benchmark-driven backend libraries for GEMMs,
