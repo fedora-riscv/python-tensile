@@ -1,7 +1,7 @@
 %global upstreamname Tensile
 
-%global rocm_release 6.0
-%global rocm_patch 2
+%global rocm_release 6.1
+%global rocm_patch 1
 %global rocm_version %{rocm_release}.%{rocm_patch}
 
 # This doesn't work quite yet:
@@ -21,6 +21,11 @@ Url:            https://github.com/ROCmSoftwarePlatform/Tensile
 License:        MIT
 Source0:        %{url}/archive/refs/tags/rocm-%{version}.tar.gz#/%{upstreamname}-%{version}.tar.gz
 
+Patch0:         0001-enable-gfx1103-for-Tensile.patch
+# In 6.1, work around  this error
+# Tensile::FATAL: Cached asm caps differ from derived asm caps for (9, 0, 10)
+Patch1:         0001-tensile-workaround-cache-problem.patch
+
 BuildRequires:  python3-devel
 
 %if %{with check}
@@ -35,6 +40,9 @@ BuildRequires:  rocm-hip-devel
 BuildRequires:  rocm-rpm-macros
 BuildRequires:  rocm-runtime-devel
 %endif
+
+Requires:       hipcc
+Requires:       rocminfo
 
 # Straight python, but only usable for ROCm which is only on x86_64
 BuildArch:      noarch
