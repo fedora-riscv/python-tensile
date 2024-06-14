@@ -1,7 +1,7 @@
 %global upstreamname Tensile
 
 %global rocm_release 6.1
-%global rocm_patch 1
+%global rocm_patch 2
 %global rocm_version %{rocm_release}.%{rocm_patch}
 
 # This doesn't work quite yet:
