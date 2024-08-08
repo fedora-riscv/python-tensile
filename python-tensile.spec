@@ -1,7 +1,7 @@
 %global upstreamname Tensile
 
-%global rocm_release 6.1
-%global rocm_patch 2
+%global rocm_release 6.2
+%global rocm_patch 0
 %global rocm_version %{rocm_release}.%{rocm_patch}
 
 # This doesn't work quite yet:
@@ -24,7 +24,7 @@ Source0:        %{url}/archive/refs/tags/rocm-%{version}.tar.gz#/%{upstreamname}
 Patch0:         0001-enable-gfx1103-for-Tensile.patch
 # In 6.1, work around  this error
 # Tensile::FATAL: Cached asm caps differ from derived asm caps for (9, 0, 10)
-Patch1:         0001-tensile-workaround-cache-problem.patch
+# Patch1:         0001-tensile-workaround-cache-problem.patch
 
 BuildRequires:  python3-devel
 
@@ -83,6 +83,11 @@ sed -i -e 's@${Tensile_PREFIX}/bin/TensileGetPath@TensileGetPath@g' Tensile/cmak
 # Use /usr instead of /opt/rocm for prefix
 sed -i -e 's@opt/rocm@usr@g' Tensile/Common.py
 sed -i -e 's@opt/rocm@usr@g' Tensile/Tests/yaml_only/test_config.py
+
+# Ignora asm cap
+sed -i -e 's@globalParameters["IgnoreAsmCapCache"] = False@globalParameters["IgnoreAsmCapCache"] = True@' Tensile/Common.py
+sed -i -e 's@arguments["IgnoreAsmCapCache"] = args.IgnoreAsmCapCache@arguments["IgnoreAsmCapCache"] = True@' Tensile/TensileCreateLibrary.py
+sed -i -e 's@if not ignoreCacheCheck and derivedAsmCaps@if False and derivedAsmCaps@' Tensile/Common.py
 
 %generate_buildrequires
 %pyproject_buildrequires -t
